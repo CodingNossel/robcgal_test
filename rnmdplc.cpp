@@ -45,13 +45,32 @@ std::vector<Rect_2> get_obj(std::vector<Rect_2> in ,int n)
     return in;
 }
 
+Point_2 get_rnmd_loc(){
+    return Point_2(std::experimental::randint(0,30), std::experimental::randint(0,30));
+}
 
+bool isIntersected(Circle_2 placable_circle, std::vector<Rect_2> rects, std::vector<Circle_2> circles) {
+    return false;
+}
+
+std::vector<Rect_2> adjustPosition(std::vector<Rect_2> rect_list) {
+    //ToDo: change y Position, x Position is calc right
+    for (Rect_2 rect : rect_list) {
+        std::cout << "Curr:" << rect << std::endl;
+        int new_x = std::experimental::randint(0,30);
+        std::cout << new_x << std::endl;
+        Rect_2 new_rect = Rect_2(Point_2(new_x - rect.xmax(), rect.ymin()), Point_2(new_x, rect.ymax()));
+        std::cout << "New:" << new_rect << std::endl;
+        rect = new_rect;
+    }
+    return rect_list;
+}
 
 int main()
 {
     //Idea: Größe der Map, und dann Rects nochmal umändern von der def mit der größe der map und dann hinzufügen
     // Problem find a multidimensional datastructure which accept more than one datastructre
-    CGAL::Pointer_property_map<Point_2> prop_map {}; //do something there
+    // CGAL::Pointer_property_map<Point_2> prop_map {}; //do something there
 
     std::vector<Rect_2> outer_section_map = { Rect_2(Point_2(0,0), Point_2(-1, 10)),
                                           Rect_2(Point_2(0,10), Point_2(30, 11)),
@@ -92,6 +111,13 @@ int main()
         std::cout << "Rect Box: " << bbox << std::endl;
     }
 
+    std::vector<Rect_2> rect_list = get_obj(rect_list, 4);
+    for (auto& rect : rect_list) std::cout << rect << std::endl;
+    
+    adjustPosition(rect_list);
+    for (auto& rect : rect_list) std::cout << rect << std::endl;
+
+    
     return 0;
 }
 
