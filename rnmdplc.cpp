@@ -53,7 +53,10 @@ int main()
     // Problem find a multidimensional datastructure which accept more than one datastructre
     CGAL::Pointer_property_map<Point_2> prop_map {}; //do something there
 
-    
+    std::vector<Rect_2> outer_section_map = { Rect_2(Point_2(0,0), Point_2(-1, 10)),
+                                          Rect_2(Point_2(0,10), Point_2(30, 11)),
+                                          Rect_2(Point_2(30,0), Point_2(31, 10)),
+                                          Rect_2(Point_2(0,0), Point_2(30, -1)) };
 
     std::vector<Point_2> map = { Point_2(0,0),
                                  Point_2(30,0),
