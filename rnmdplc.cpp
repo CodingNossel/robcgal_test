@@ -55,8 +55,8 @@ std::vector<Rect_2> adjustPosition(std::vector<Rect_2> rect_list) {
 
     for (int i = 0; i < rect_list.size(); i++) {
 
-        int new_x = std::experimental::randint(0,30);
-        int new_y = std::experimental::randint(0,10);
+        int new_x = std::experimental::randint((int)rect_list.at(i).xmax(), 30);
+        int new_y = std::experimental::randint((int)rect_list.at(i).ymax(), 10);
         
         Point_2 n_min_Point = Point_2(new_x - rect_list.at(i).xmax(), new_y - rect_list.at(i).ymax());
         Point_2 n_max_Point = Point_2(new_x, new_y);
