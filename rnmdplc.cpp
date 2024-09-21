@@ -134,5 +134,3 @@ int main()
 
     return 0;
 }
-
-// https://doc.cgal.org/latest/Barycentric_coordinates_2/index.html
