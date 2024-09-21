@@ -7,6 +7,7 @@
 #include <CGAL/property_map.h>
 #include <vector>
 #include <experimental/random>
+#include <CGAL/intersections.h>
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
 typedef K::Point_2 Point_2;
@@ -54,17 +55,32 @@ bool isIntersected(Circle_2 placable_circle, std::vector<Rect_2> rects, std::vec
 }
 
 std::vector<Rect_2> adjustPosition(std::vector<Rect_2> rect_list) {
-    //ToDo: change y Position, x Position is calc right
-    for (Rect_2 rect : rect_list) {
-        std::cout << "Curr:" << rect << std::endl;
+
+    for (int i = 0; i < rect_list.size(); i++) {
+
         int new_x = std::experimental::randint(0,30);
-        std::cout << new_x << std::endl;
-        Rect_2 new_rect = Rect_2(Point_2(new_x - rect.xmax(), rect.ymin()), Point_2(new_x, rect.ymax()));
-        std::cout << "New:" << new_rect << std::endl;
-        rect = new_rect;
+        int new_y = std::experimental::randint(0,10);
+        
+        Point_2 n_min_Point = Point_2(new_x - rect_list.at(i).xmax(), new_y - rect_list.at(i).ymax());
+        Point_2 n_max_Point = Point_2(new_x, new_y);
+
+        Rect_2 new_rect = Rect_2(n_min_Point, n_max_Point);
+
+        rect_list.at(i) = new_rect;
+    }
+
+    for (Rect_2 rect : rect_list) {
+        for (int i = 0; i < rect_list.size(); ++i)
+        {
+            if (CGAL::do_intersect(rect, rect_list[i])) {
+                int r {}; //ToDo: Rect_2 doesnt have to intersect
+            }
+        }
     }
     return rect_list;
 }
+
+
 
 int main()
 {
@@ -114,7 +130,7 @@ int main()
     std::vector<Rect_2> rect_list = get_obj(rect_list, 4);
     for (auto& rect : rect_list) std::cout << rect << std::endl;
     
-    adjustPosition(rect_list);
+    rect_list = adjustPosition(rect_list);
     for (auto& rect : rect_list) std::cout << rect << std::endl;
 
     
