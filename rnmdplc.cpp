@@ -132,13 +132,27 @@ bool isIntersected(Circle_2 placable_circle, std::vector<Rect_2> rects, std::vec
 
 int main()
 {
+    int num_of_fixed_obj {}; 
+    double square {10.0};    
+    
+    bool cond_Var = true;
+    int mk_crcl_smaller {0};
+    
+    std::cout << "Enter the number of fixed objects: ";
+    std::cin >> num_of_fixed_obj;
+    if (std::cin.fail()) {
+        std::cout << "Invalid input" << std::endl;
+        return 0;
+    }
+    std::cout << std::endl;
+
     std::vector<Rect_2> outer_section_map = { Rect_2(Point_2(0,0), Point_2(-1, 10)),
                                           Rect_2(Point_2(0,10), Point_2(30, 11)),
                                           Rect_2(Point_2(30,0), Point_2(31, 10)),
                                           Rect_2(Point_2(0,0), Point_2(30, -1)) };
 
 
-    std::vector<Rect_2> rect_list = getObj(rect_list, 4);
+    std::vector<Rect_2> rect_list = getObj(rect_list, num_of_fixed_obj);
     for (auto& rect : rect_list) std::cout << rect << std::endl;
     
     rect_list = adjustPosition(rect_list);
@@ -149,16 +163,18 @@ int main()
     std::cout << rect_list.size() << std::endl;
     Circle_2 place_obj_crcl= getCircle();
 
-    double square = 10.0;    
-    
-    bool cond_Var = true;
-    int mk_crcl_smaller = 0;
+
 
     while (cond_Var) {
 
         if (mk_crcl_smaller%10)
         {
             square -= 1.0;
+            if (square < 1.0) {
+                std::cout << "No place to put the object" << std::endl;
+                return 0;
+            }
+            
         }
         
         place_obj_crcl = getRmdLocOnMapCrcl(place_obj_crcl, square);
