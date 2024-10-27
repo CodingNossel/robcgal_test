@@ -1,3 +1,4 @@
+#include "random_place_check.h"
 #include <iostream>
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
 #include <CGAL/convex_hull_2.h>
@@ -130,7 +131,42 @@ bool isIntersected(Circle_2 placable_circle, std::vector<Rect_2> rects, std::vec
 }
 
 
-int main()
+bool isBiggestCircle(double square_of_circle, int num_of_fixed_obj) {
+    bool condition_var = true;
+    int make_circle_smaller = 0;
+
+    std::vector<Rect_2> outer_section_map = { Rect_2(Point_2(0,0), Point_2(-1, 10)),
+                                        Rect_2(Point_2(0,10), Point_2(30, 11)),
+                                        Rect_2(Point_2(30,0), Point_2(31, 10)),
+                                        Rect_2(Point_2(0,0), Point_2(30, -1)) };
+
+    std::vector<Rect_2> rect_list = getObj(rect_list, num_of_fixed_obj);
+    
+    rect_list = adjustPosition(rect_list);
+    rect_list.insert(rect_list.end(), outer_section_map.begin(), outer_section_map.end());
+
+    Circle_2 place_obj_circle= getCircle();
+
+    while (condition_var) {
+
+        if (make_circle_smaller%10)
+        {
+            square_of_circle -= 1.0;
+            if (square_of_circle < 1.0) {
+                std::cout << "No place to put the object" << std::endl;
+                return false;
+            }
+        }
+        
+        place_obj_circle = getRmdLocOnMapCrcl(place_obj_circle, square_of_circle);
+        condition_var = isIntersected(place_obj_circle, rect_list, {}); // return false if intersected, so func returns true then
+        make_circle_smaller++;
+    }
+    return true;
+
+}
+
+/*int main()
 {
     int num_of_fixed_obj {}; 
     double square {10.0};    
@@ -184,6 +220,6 @@ int main()
     
 
     return 0;
-}
+}*/
 
 // ToDo: Change int with double
