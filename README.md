@@ -1,3 +1,5 @@
+# ToDo: Find out how to compile with an .hpp File or something like that
+
 # robcgal_test
 
 # What you need:
