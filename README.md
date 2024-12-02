@@ -10,3 +10,11 @@
 cmake -DCMAKE_BUILD_TYPE=Release .
 make
 ```
+
+
+# ToDo:
+- trying with std::normal_distribution
+	- doing more runs and safe the results
+- count how often we need to dice till solution
+- dicing loc at first after that expand radius
+	- currently complete other way
